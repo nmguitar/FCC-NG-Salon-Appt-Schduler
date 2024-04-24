@@ -1,0 +1,47 @@
+~~ Bash ~~
+pg_dump -cC --inserts -U freecodecamp salon > salon.sql  ~~~ For dumping current status of database
+psql -U postgres < salon.sql   ~~~ for rebuilding database in a terminal where the sql file is
+touch salon.sh
+chmod +x salon.sh
+
+~~ PSQL ~~
+psql --username=freecodecamp --dbname=postgres
+psql --username=freecodecamp --dbname=salon -c "SQL QUERY HERE"
+
+CREATE DATABASE salon;
+\l
+\c salon
+CREATE TABLE customers();
+CREATE TABLE appointments();
+CREATE TABLE services();
+\d
+
+ALTER TABLE customers ADD COLUMN customer_id SERIAL;
+ALTER TABLE customers ADD PRIMARY KEY(customer_id);
+\d customers
+ALTER TABLE appointments ADD COLUMN appointment_id SERIAL;
+ALTER TABLE appointments ADD PRIMARY KEY(appointment_id);
+\d appointments
+ALTER TABLE services ADD COLUMN service_id SERIAL;
+ALTER TABLE services ADD PRIMARY KEY(service_id);
+\d services
+
+ALTER TABLE appointments ADD COLUMN customer_id INT NOT NULL;
+ALTER TABLE appointments ADD FOREIGN KEY(customer_id) REFERENCES customers(customer_id);
+\d appointments
+ALTER TABLE appointments ADD COLUMN service_id INT NOT NULL;
+ALTER TABLE appointments ADD FOREIGN KEY(service_id) REFERENCES services(service_id);
+\d appointments
+
+ALTER TABLE customers ADD COLUMN phone VARCHAR(30) UNIQUE;
+\d customers;
+ALTER TABLE customers ADD COLUMN name VARCHAR(40) NOT NULL;
+\d customers;
+ALTER TABLE services ADD COLUMN name VARCHAR(40) NOT NULL;
+\d services;
+ALTER TABLE appointments ADD COLUMN time VARCHAR(30) NOT NULL;
+\d appointments;
+
+INSERT INTO services(name) VALUES('cut'), ('color'), ('perm'), ('style'), ('trim');
+SELECT * FROM services;
+
